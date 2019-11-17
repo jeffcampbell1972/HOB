@@ -1,0 +1,54 @@
+﻿@model HOB.Web.Models.ReportViewModel
+@{
+    ViewData["Title"] = "HOB Report";
+}
+
+<h1>HOB Report</h1>
+
+<p>Enter some text in the field below and the click [Generate] button to see how it works.</p>
+
+@using (Html.BeginForm("Report", "Home", FormMethod.Post)) {
+
+    @Html.TextAreaFor(x => x.Text, 10)
+    
+    <button type="submit">Generate</button>
+
+}
+
+<hr />
+
+@if (Model.ShowReport) {
+
+    <div id="Report">
+
+        <div id="ReportText">
+            @Html.LabelFor(x => x.ReportText)
+            <br />
+            @Html.DisplayFor(x => x.ReportText)
+        </div>
+        <br />
+        <div id="Domain" style="float:left; width:50%;">
+            @Html.LabelFor(x => x.Domain)
+            <br />
+            <ul style="column-count:3">
+                @foreach (var domainItem in Model.Domain)
+                {
+                    <li>@domainItem</li>
+                }
+            </ul>
+        </div>
+
+        <div id="Histogram" style="float:left; width:50%;">
+            @Html.LabelFor(x => x.Histogram)
+            <br />
+            <ul style="column-count:3">
+                @foreach (var bucket in Model.Histogram.Buckets)
+                {
+                    <li>@bucket.Count  - @bucket.Value</li>
+                }
+            </ul>
+        </div>
+
+        <div style="clear:both"></div>
+    </div>
+}
